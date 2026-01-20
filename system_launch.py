@@ -5,24 +5,22 @@ from launch.substitutions import FindExecutable
 def generate_launch_description():
     
     # 1. 定义核心路径 (Docker 内部路径)
-    workspace_path = '/root/workspace/test_ros2_lifecycle_node'
+    workspace_path = '/root/workspace/test_ros2'
     
     # 2. 定义要启动的节点
     
     # 节点 A: 电机驱动 (Lifecycle Node)
     motor_node = ExecuteProcess(
-        cmd=['python3', f'{workspace_path}/motor_driver.py'],
+        cmd=['python3', '-u',f'{workspace_path}/motor_driver.py'],
         output='screen',
-        name='motor_process',
-        env={'PYTHONUNBUFFERED': '1'}
+        name='motor_process'
     )
     
     # 节点 B: 业务逻辑 (QoS Demo Publisher)
     business_node = ExecuteProcess(
-        cmd=['python3', f'{workspace_path}/qos_demo.py', 'pub'],
+        cmd=['python3', '-u',f'{workspace_path}/qos_demo.py', 'pub'],
         output='screen',
-        name='business_process',
-        env={'PYTHONUNBUFFERED': '1'}
+        name='business_process'
     )
 
     # 3. 定义生命周期管理指令 (The Orchestrator)
